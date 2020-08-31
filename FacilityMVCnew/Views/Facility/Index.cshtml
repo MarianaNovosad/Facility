@@ -1,0 +1,52 @@
+﻿@model PaginatedList<FacilityMVCnew.Models.Facility>
+@{
+    ViewData["Title"] = "List of Facilities";
+}
+
+    <h3>Facilities</h3>
+    <a asp-action="Create">Add Facility</a>
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>FacilityStatus</th>
+            <th></th>
+        </tr>
+        @foreach (var facility in Model)
+        {
+            <tr>
+                <td>@facility.Name</td>
+                <td>@facility.Address</td>
+                <td>@facility.PhoneNumber</td>
+                <td>@facility.Email</td>
+                <td>@facility.FacilityStatus.Name</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@facility.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@facility.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </table>
+   @{ var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @prevDisabled">
+        Previous
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @nextDisabled">
+        Next
+    </a>
+   
+
+
